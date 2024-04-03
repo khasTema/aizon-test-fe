@@ -2,7 +2,12 @@ import React from 'react'
 import { Tab } from './Tab'
 import { tabsData as data } from '../data'
 
-export const TabsNav = ({onClick, activeTab}) => {
+interface IOwnPros {
+  onClick: (index: number) => void;
+  activeTab: number;
+}
+
+export const TabsNav = ({onClick, activeTab}: IOwnPros) => {
   return (
     <div className='tabs-nav'>
         {

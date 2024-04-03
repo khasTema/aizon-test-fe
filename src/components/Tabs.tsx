@@ -2,11 +2,17 @@ import React, { useState } from 'react';
 import { TabsNav } from './TabsNav';
 import { Content } from './Content';
 import './Tabs.css';
+import { TabsData } from '../types';
 
-export const Tabs = ({data, defaultTab = 0}) => {
+interface IOwnProps {
+  data: TabsData[];
+  defaultTab?: number
+}
+
+export const Tabs = ({data, defaultTab = 0}: IOwnProps) => {
   const [activeTab, setActiveTab] = useState(defaultTab || 0);
 
-  const onClickTabHandler = (index) => {
+  const onClickTabHandler = (index: number) => {
     setActiveTab(index);
   };
 

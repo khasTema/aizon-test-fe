@@ -1,6 +1,10 @@
 import React from 'react'
 
-export const Content = ({shownContent}) => {
+interface IOwnProps {
+  shownContent: string;
+}
+
+export const Content = ({shownContent}: IOwnProps) => {
   return (
     <div className='content'>
         <h1>
