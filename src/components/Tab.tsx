@@ -10,7 +10,7 @@ interface IOwnProps {
 export const Tab = ({active, title, onClick}: IOwnProps) => {
     const isActive: string = active ? 'active' : '';
     return (
-      <div className={`${containerClass} ${isActive}`} onClick={onClick}>
+      <div className={`${containerClass} ${isActive}`} data-testid='tab' onClick={onClick}>
         <div className={`${titleClass} ${isActive}`}>{title}</div>
       </div>
     );
