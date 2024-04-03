@@ -1,67 +1,44 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './Tabs.css';
 
+export const Tab = ({active, title, onClick}) => {
+  const containerClass = 'tab-wrapper';
+  const titleClass = 'title';
 
-export class Tab extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    let containerClass = 'tab-wrapper';
-    let titleClass = 'title';
-    if (this.props.active) {
-        containerClass += ' active';
-        titleClass += ' active';
-    }
-    return (
-      <div className={containerClass} onClick={this.props.onClick}>
-        <div className={titleClass}>{this.props.title}</div>
-      </div>
-    );
-  }
-}
+  const isActive = active ? 'active' : '';
+  return (
+    <div className={`${containerClass} ${isActive}`} onClick={onClick}>
+      <div className={`${titleClass} ${isActive}`}>{title}</div>
+    </div>
+  );
+};
 
-export class Tabs extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeTab: this.props.defaultTab || 0
-    }
-    this.onClickTabHandler = this.onClickTabHandler.bind(this);
-  }
+export const Tabs = (props) => {
+  const [activeTab, setActiveTab] = useState(props.defaultTab || 0);
 
-  onClickTabHandler(index) {
-    this.setState({ activeTab: index });
-    if (this.props.onClick) this.props.onClick(index);
+  const onClickTabHandler = (index) => {
+    setActiveTab(index);
+    if (props.onClick) props.onClick(index);
   };
 
+  const tabsNav = React.Children.map(props.children, (child, index) => {
+    const onClick = () => onClickTabHandler(index);
+    const active = activeTab === index;
+    return React.cloneElement(child, { onClick, active });
+  });
 
-  render() {
-    const tabsNav = [];
-    for (var i=0; i<this.props.children.length; i++) {
-        const index = i;
-        let child = this.props.children[i];
-        const props = { ...child.props };
-        props.onClick = () => {
-            this.onClickTabHandler(index);
-        };
-        if (this.state.activeTab === i) props.active = true;
-        else props.active = false;
-        tabsNav.push(React.cloneElement( child, props));
-    }
-    const content = tabsNav[this.state.activeTab].props.children;
+  const content = React.Children.toArray(props.children)[activeTab].props.children;
 
-    return (
-      <div className='tabs-container'>
-        <div className='tabs-nav'>
-          {tabsNav}
-        </div>
-        <div className='content'>
-          {content}
-        </div>
+  return (
+    <div className='tabs-container'>
+      <div className='tabs-nav'>
+        {tabsNav}
       </div>
-    );
-  }
-}
+      <div className='content'>
+        {content}
+      </div>
+    </div>
+  );
+};
 
 export default Tabs;
