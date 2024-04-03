@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { TabsNav } from './TabsNav';
 import { Content } from './Content';
-import './Tabs.css';
 import { TabsData } from '../types';
+import '../styles/Tabs.css';
 
 interface IOwnProps {
   data: TabsData[];
