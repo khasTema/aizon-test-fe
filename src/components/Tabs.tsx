@@ -16,7 +16,7 @@ export const Tabs = ({data, defaultTab = 0}: IOwnProps) => {
     setActiveTab(index);
   };
 
-  const shownContent = data[activeTab].content
+  const shownContent: string = data[activeTab].content
 
   return (
     <div className='tabs-container'>
